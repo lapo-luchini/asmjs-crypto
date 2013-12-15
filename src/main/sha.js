@@ -270,11 +270,10 @@ heap32[240>>2]=0x90befffa; heap32[244>>2]=0xa4506ceb; heap32[248>>2]=0xbef9a3f7;
 
 		asm.initContext(context);
 
-		for(i = 0, b = offset, c = chunk ; i < len ; ) {
+		for(i = 0, b = offset, c = offset + len ; b < c ; ) {
 			heap8[chunk + (i++)] = buff8[b++];
-			if((i % 64) > 0) {
-				continue;
-			}
+			if (i < 64)
+                                continue;
 			asm.hash(context, chunk);
 			i = 0;
 		}
